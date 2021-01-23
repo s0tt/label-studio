@@ -11,6 +11,8 @@ import pandas as pd
 import traceback as tb
 import label_studio
 
+import time
+
 try:
     import ujson as json
 except ModuleNotFoundError:
@@ -558,6 +560,32 @@ def api_save_config():
         return make_response(jsonify({'label_config': [str(e)]}), status.HTTP_400_BAD_REQUEST)
 
     return Response(status=status.HTTP_201_CREATED)
+
+@blueprint.route('/api/project/getLabel', methods=['GET'])
+@requires_auth
+@exception_handler
+def api_getLabel():
+    export_format = request.args.get('format')
+    now = datetime.now()
+
+    while g.project.waitOnLabeling:
+        time.sleep(0.1)
+
+    os.makedirs(g.project.export_dir, exist_ok=True)
+   
+    zip_dir = os.path.join(g.project.export_dir, now.strftime('%Y-%m-%d-%H-%M-%S') + '-' + export_format)
+    os.makedirs(zip_dir, exist_ok=True)
+    g.project.converter.convert(g.project.output_dir, zip_dir, format=export_format)
+    shutil.make_archive(zip_dir, 'zip', zip_dir)
+    shutil.rmtree(zip_dir)
+
+    zip_dir_full_path = os.path.abspath(zip_dir + '.zip')
+    response = send_file(zip_dir_full_path, as_attachment=True)
+    response.headers['filename'] = os.path.basename(zip_dir_full_path)
+
+    g.project.delete_all_tasks()
+
+    return response
 
 
 @blueprint.route('/api/project/export', methods=['GET'])
