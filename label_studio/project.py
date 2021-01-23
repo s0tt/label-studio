@@ -72,6 +72,8 @@ class Project(object):
         self.path = os.path.join(root_dir, self.name)
         self.ml_backends = []
 
+        self.waitOnLabeling = False
+
         self.on_boarding = {}
         self.context = context or {}
         self.project_obj = None
@@ -625,6 +627,7 @@ class Project(object):
         # write task + completions to file
         self.target_storage.set(task_id, task)
         logger.debug('Completion for task ' + str(task_id) + ' saved with id =' + str(completion['id']))
+        self.waitOnLabeling = False
         return completion['id']
 
     def delete_task(self, task_id):

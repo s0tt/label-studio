@@ -178,8 +178,11 @@ def api_import():
         * files (as web form, files will be hosted by this flask server)
         * url links to images, audio, csv (if you use TimeSeries in labeling config)
     """
-
+    g.project.waitOnLabeling = True
     start = time.time()
+    data = request.json if request.json else request.form
+    for d in data:
+        d['text'] = data[0]['text'].replace('#$@','"')
     try:
         import_state = _create_import_state(request, g)
     except ValidationError as e:
