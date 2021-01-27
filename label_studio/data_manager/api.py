@@ -13,6 +13,7 @@ from label_studio.data_manager.functions import (
     get_selected_items, remove_tabs
 )
 
+import time
 
 @blueprint.route('/api/project/columns', methods=['GET'])
 @requires_auth
@@ -191,6 +192,7 @@ def api_project_tab_action(tab_id):
         also it could be used by POST /api/project/actions
     """
     # use filters and selected items from tab
+    
     if tab_id is not None:
         tab_id = int(tab_id)
         tab = load_tab(tab_id, g.project, raise_if_not_exists=True)
@@ -198,6 +200,12 @@ def api_project_tab_action(tab_id):
     else:
         tab = {}
         selected = None
+
+    # Wait until a new Task is available
+    action_id = request.values.get('id', None)
+    if action_id == "next_task":
+        while not g.project.newTaskAvailable:
+            time.sleep(0.1)
 
     # use filters and selected items from request if it's specified
     if request.json is not None:
@@ -219,7 +227,6 @@ def api_project_tab_action(tab_id):
         return make_response(jsonify(response), 404)
 
     # wrong action id
-    action_id = request.values.get('id', None)
     if action_id is None:
         response = {'detail': 'No action id "' + str(action_id) + '", use ?id=<action-id>'}
         return make_response(jsonify(response), 422)

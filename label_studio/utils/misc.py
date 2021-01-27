@@ -375,7 +375,8 @@ def start_browser(ls_url, no_browser):
     if no_browser:
         return
 
-    browser_url = ls_url + '/welcome'
+    # Start the labeling loop
+    browser_url = ls_url + '/tasks?tab=1&labeling=1'
     threading.Timer(2.5, lambda: webbrowser.open(browser_url)).start()
     print('Start browser at URL: ' + browser_url)
 

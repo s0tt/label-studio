@@ -564,29 +564,16 @@ def api_save_config():
 @blueprint.route('/api/project/getLabel', methods=['GET'])
 @requires_auth
 @exception_handler
-def api_getLabel():
-    export_format = request.args.get('format')
-    now = datetime.now()
+def api_getLabelId():
+    # API for task export in connection with the active learner. It waits until the labeling for the specific task has been completed.
 
-    while g.project.waitOnLabeling:
+    id = int(request.args.get('id', g.project.waitOnLabeling))
+    while g.project.waitOnLabeling>=0:
         time.sleep(0.1)
 
-    os.makedirs(g.project.export_dir, exist_ok=True)
-   
-    zip_dir = os.path.join(g.project.export_dir, now.strftime('%Y-%m-%d-%H-%M-%S') + '-' + export_format)
-    os.makedirs(zip_dir, exist_ok=True)
-    g.project.converter.convert(g.project.output_dir, zip_dir, format=export_format)
-    shutil.make_archive(zip_dir, 'zip', zip_dir)
-    shutil.rmtree(zip_dir)
-
-    zip_dir_full_path = os.path.abspath(zip_dir + '.zip')
-    response = send_file(zip_dir_full_path, as_attachment=True)
-    response.headers['filename'] = os.path.basename(zip_dir_full_path)
-
-    g.project.delete_all_tasks()
-
-    return response
-
+    g.project.newTaskAvailable = False
+    task_data = g.project.get_task_with_completions(id)
+    return make_response(jsonify(task_data), 200)
 
 @blueprint.route('/api/project/export', methods=['GET'])
 @requires_auth
