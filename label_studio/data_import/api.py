@@ -168,6 +168,31 @@ def _create_import_state(request, g):
         raise ValidationError('load_tasks: No data found in values or in files')
     return import_state
 
+@blueprint.route('/api/project/sendTask', methods=['POST'])
+@requires_auth
+@exception_handler
+def api_sendTask():
+    # API for task import in connection with the active learner
+
+    start = time.time()
+    data = request.json if request.json else request.form
+    for d in data:
+        d['text'] = data[0]['text'].replace('#$@','"')
+    try:
+        import_state = _create_import_state(request, g)
+    except ValidationError as e:
+        # TODO: import specific exception handler
+        return make_response(jsonify(e.msg_to_list()), 422)
+
+    response = import_state.serialize()
+    new_tasks = import_state.apply()
+    duration = time.time() - start
+    response['duration'] = duration
+    response['new_task_ids'] = [t for t in new_tasks]
+
+    g.project.waitOnLabeling = response['new_task_ids'][0]
+    g.project.newTaskAvailable = True
+    return make_response(jsonify(response), status.HTTP_201_CREATED)
 
 @blueprint.route('/api/project/import', methods=['POST'])
 @requires_auth
@@ -178,11 +203,8 @@ def api_import():
         * files (as web form, files will be hosted by this flask server)
         * url links to images, audio, csv (if you use TimeSeries in labeling config)
     """
-    g.project.waitOnLabeling = True
     start = time.time()
-    data = request.json if request.json else request.form
-    for d in data:
-        d['text'] = data[0]['text'].replace('#$@','"')
+
     try:
         import_state = _create_import_state(request, g)
     except ValidationError as e:
