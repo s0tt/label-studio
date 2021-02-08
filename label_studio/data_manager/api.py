@@ -201,12 +201,6 @@ def api_project_tab_action(tab_id):
         tab = {}
         selected = None
 
-    # Wait until a new Task is available
-    action_id = request.values.get('id', None)
-    if action_id == "next_task":
-        while not g.project.newTaskAvailable:
-            time.sleep(0.1)
-
     # use filters and selected items from request if it's specified
     if request.json is not None:
         selected = request.json.get('selectedItems', selected)

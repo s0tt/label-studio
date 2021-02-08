@@ -168,6 +168,18 @@ def _create_import_state(request, g):
         raise ValidationError('load_tasks: No data found in values or in files')
     return import_state
 
+@blueprint.route('/api/project/waitForTask', methods=['GET'])
+@requires_auth
+@exception_handler
+def api_waitForTask():
+    # Releases the export of the labeled data to the Active Learner and waits for new imported data to enable the page to be updated.
+
+    g.project.newTaskAvailable = False
+    g.project.waitOnLabeling = False
+    while not g.project.newTaskAvailable:
+        time.sleep(0.1)
+    return HttpResponse(status=status.HTTP_204_NO_CONTENT)
+
 @blueprint.route('/api/project/sendTask', methods=['POST'])
 @requires_auth
 @exception_handler
@@ -190,7 +202,7 @@ def api_sendTask():
     response['duration'] = duration
     response['new_task_ids'] = [t for t in new_tasks]
 
-    g.project.waitOnLabeling = response['new_task_ids'][0]
+    g.project.waitOnLabeling = True
     g.project.newTaskAvailable = True
     return make_response(jsonify(response), status.HTTP_201_CREATED)
 
