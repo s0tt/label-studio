@@ -578,11 +578,18 @@ def api_getLabels():
 
     g.project.newTaskAvailable = False
     ids = g.project.get_completions_ids()
+
     dataList = []
-    for id in ids:
-        task_data = g.project.get_task_with_completions(id)
+    for task_id in list(set(ids) - set(g.project.lastCompletions)):
+        task_data = g.project.get_task_with_completions(task_id)
         dataList.append(task_data)
-    g.project.delete_all_tasks()
+    g.project.lastCompletions = ids
+
+    for task_id in g.project.newTasks:
+        data = g.project.source_storage.get(task_id)
+        data["data"]["new"] = False
+        g.project.source_storage.set(task_id, data)
+
     return make_response(jsonify(dataList), 200)
 
 @blueprint.route('/api/project/export', methods=['GET'])

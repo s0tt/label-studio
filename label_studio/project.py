@@ -74,6 +74,9 @@ class Project(object):
 
         self.waitOnLabeling = False
         self.newTaskAvailable = False
+        self.newTasks = []
+        self.firstTime = True
+        self.lastCompletions = []
 
         self.on_boarding = {}
         self.context = context or {}
@@ -596,6 +599,9 @@ class Project(object):
             task['completions'] = []
         else:
             task = deepcopy(task)
+
+        if "data" in task and "new" in task["data"]:
+            task["data"]["new"] = False
 
         # remove possible stored predictions
         task.pop('predictions', None)

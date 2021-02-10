@@ -173,9 +173,14 @@ def _create_import_state(request, g):
 @exception_handler
 def api_waitForTask():
     # Releases the export of the labeled data to the Active Learner and waits for new imported data to enable the page to be updated.
-
+    if request.headers.get('start', "False") == "True":
+        if not g.project.firstTime:
+            return HttpResponse(status=status.HTTP_201_CREATED)
+        else:
+            g.project.firstTime = False
+    else:
+        g.project.waitOnLabeling = False
     g.project.newTaskAvailable = False
-    g.project.waitOnLabeling = False
     while not g.project.newTaskAvailable:
         time.sleep(0.1)
     return HttpResponse(status=status.HTTP_204_NO_CONTENT)
@@ -189,7 +194,8 @@ def api_sendTask():
     start = time.time()
     data = request.json if request.json else request.form
     for d in data:
-        d['text'] = data[0]['text'].replace('#$@','"')
+        d['text'] = d['text'].replace('#$@','"')
+        d['new'] = True
     try:
         import_state = _create_import_state(request, g)
     except ValidationError as e:
@@ -202,6 +208,7 @@ def api_sendTask():
     response['duration'] = duration
     response['new_task_ids'] = [t for t in new_tasks]
 
+    g.project.newTasks = response['new_task_ids']
     g.project.waitOnLabeling = True
     g.project.newTaskAvailable = True
     return make_response(jsonify(response), status.HTTP_201_CREATED)

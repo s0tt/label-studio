@@ -323,7 +323,10 @@ def serialize_class(class_instance, keys=None):
 
 class DirectionSwitch:
     def __init__(self, obj, inverted):
-        self.obj = str(obj) if isinstance(obj, dict) or isinstance(obj, list) else obj
+        try:
+            self.obj = float(obj)
+        except ValueError:
+            self.obj = str(obj) if isinstance(obj, dict) or isinstance(obj, list) else obj
         self.inverted = inverted
 
     def __eq__(self, other):
