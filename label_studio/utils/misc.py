@@ -323,7 +323,10 @@ def serialize_class(class_instance, keys=None):
 
 class DirectionSwitch:
     def __init__(self, obj, inverted):
-        self.obj = str(obj) if isinstance(obj, dict) or isinstance(obj, list) else obj
+        try:
+            self.obj = float(obj)
+        except ValueError:
+            self.obj = str(obj) if isinstance(obj, dict) or isinstance(obj, list) else obj
         self.inverted = inverted
 
     def __eq__(self, other):
@@ -376,7 +379,7 @@ def start_browser(ls_url, no_browser):
         return
 
     # Start the labeling loop
-    browser_url = ls_url + '/tasks?tab=1&labeling=1'
+    browser_url = ls_url + '/tasks?tab=1'
     threading.Timer(2.5, lambda: webbrowser.open(browser_url)).start()
     print('Start browser at URL: ' + browser_url)
 

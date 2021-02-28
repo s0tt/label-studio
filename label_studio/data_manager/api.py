@@ -218,6 +218,8 @@ def api_project_tab_action(tab_id):
     ordering = request.values.get('ordering') or tab.get('ordering', None)
     items = get_selected_items(g.project, selected, filters, ordering)
 
+    action_id = request.values.get('id', None)
+
     # make advanced params for actions
     params = SimpleNamespace(tab=tab, values=request.values)
 

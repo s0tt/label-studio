@@ -567,13 +567,38 @@ def api_save_config():
 def api_getLabelId():
     # API for task export in connection with the active learner. It waits until the labeling for the specific task has been completed.
 
-    id = int(request.args.get('id', g.project.waitOnLabeling))
-    while g.project.waitOnLabeling>=0:
+    id = int(request.args.get('id', 0))
+    while g.project.waitOnLabeling:
         time.sleep(0.1)
 
     g.project.newTaskAvailable = False
     task_data = g.project.get_task_with_completions(id)
     return make_response(jsonify(task_data), 200)
+
+@blueprint.route('/api/project/getLabels', methods=['GET'])
+@requires_auth
+@exception_handler
+def api_getLabels():
+    # API for task export in connection with the active learner. It waits until the labeling for the specific task has been completed.
+
+    while g.project.waitOnLabeling:
+        time.sleep(0.1)
+
+    g.project.newTaskAvailable = False
+    ids = g.project.get_completions_ids()
+
+    dataList = []
+    for task_id in list(set(ids) - set(g.project.lastCompletions)):
+        task_data = g.project.get_task_with_completions(task_id)
+        dataList.append(task_data)
+    g.project.lastCompletions = ids
+
+    for task_id in g.project.newTasks:
+        data = g.project.source_storage.get(task_id)
+        data["data"]["new"] = False
+        g.project.source_storage.set(task_id, data)
+
+    return make_response(jsonify(dataList), 200)
 
 @blueprint.route('/api/project/export', methods=['GET'])
 @requires_auth

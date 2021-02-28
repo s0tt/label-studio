@@ -18,6 +18,7 @@
       <Header value="Weighting" />
       <Rating name="weighting" toName="text" />
     </View>
+    <Text name="new" value="$new" />
   </View>
 
 </View>
