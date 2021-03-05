@@ -202,7 +202,9 @@ def api_sendTask():
     start = time.time()
     data = request.json if request.json else request.form
     for d in data:
-        d['text'] = d['text'].replace('#$@','"')
+        items = d.copy().items()
+        for key, value in items:
+            d[key] = value.replace('#$@','"')
         d['new'] = True
     try:
         import_state = _create_import_state(request, g)

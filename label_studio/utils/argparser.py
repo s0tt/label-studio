@@ -5,7 +5,7 @@ from label_studio.utils.io import find_dir
 from label_studio.utils.misc import iter_config_templates
 
 
-def parse_input_args():
+def parse_input_args(project_name=None, port=None, configFile='config.xml'):
     """ Combine args with json config
 
     :return: config dict
@@ -13,6 +13,7 @@ def parse_input_args():
     import sys
     import argparse
     from label_studio.project import Project
+    from argparse import Namespace
 
     if len(sys.argv) == 1:
         print('\nQuick start usage: label-studio start my_project --init\n')
@@ -155,8 +156,11 @@ def parse_input_args():
 
     parser_start_ms = subparsers.add_parser(
         'start-multi-session', help='Start Label Studio server', parents=[root_parser])
-
-    args = parser.parse_args()
+    if project_name==None:
+        args = parser.parse_args()
+    else:
+        dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+        args = Namespace(allow_serving_local_files=True, cert_file=None, command='start', config_path=None, debug=None, force=True, host=None, init=True, input_format='json', input_path=None, key_file=None, label_config=dir_path+"\\"+configFile, log_level=None, ml_backends=None, no_browser=False, output_dir=None, password='', port=port, project_desc=None, project_name=project_name, protocol=None, root_dir='.', sampling='sequential', source=None, source_params={}, source_path=None, target=None, target_params={}, target_path=None, template=None, use_gevent=False, username='', verbose=False, version=False)
 
     # print version
     if args.version or args.command == 'version':

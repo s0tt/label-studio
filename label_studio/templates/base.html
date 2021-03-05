@@ -66,6 +66,7 @@
          data-tooltip="If you have found a bug or have questions ping us in Slack" data-position="bottom right"
          target="_blank"><img src="static/images/slack.png" height="22"/>
       </a>
+      <button style="padding: 0; border: none; background: none;" onclick="shutdown()"><img src="static/images/shutdown-button.png" height="22" /></button>
     </span>
 
   </ul>
@@ -91,6 +92,12 @@
       logo.show();
     }
   })
+
+  function shutdown() {
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", window.location.href.split("/")[0] + "/api/shutdown", true); // true for asynchronous
+      xmlHttp.send(null);
+  }
 </script>
 
 </body>

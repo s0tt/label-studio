@@ -47,7 +47,7 @@ def check_for_the_latest_version():
         print(update_package_message())
 
 
-def main():
+def main(project_name=None, port=None, configFile='config.xml'):
     # configure logging before importing any label_studio code
     setup_default_logging_config()
 
@@ -55,7 +55,7 @@ def main():
     check_for_the_latest_version()
 
     from label_studio.blueprint import main
-    return main()
+    return main(project_name, port, configFile)
 
 
 if __name__ == "__main__":

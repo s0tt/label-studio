@@ -989,12 +989,22 @@ def validation_error_handler(error):
 def json_filter(s):
     return json.dumps(s)
 
+def shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    
+@blueprint.route('/api/shutdown', methods=['GET'])
+def shutdown():
+    shutdown_server()
+    return 'Server shutting down...'
 
-def main():
+
+def main(project_name=None, port=None, configFile='config.xml'):
     # this will avoid looped imports and will register deprecated endpoints in the blueprint
     import label_studio.deprecated
-
-    input_args = parse_input_args()
+    input_args = parse_input_args(project_name, port, configFile)
     app = create_app(LabelStudioConfig(input_args=input_args))
 
     # setup logging level
