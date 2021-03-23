@@ -11,7 +11,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 ENV PORT="8080"
-ENV PROJECT_NAME="my_project"
+ENV PROJECT_NAME="questionAnswering"
 ENV HOST=0.0.0.0
 ENV PROTOCOL=http://
 # basic auth params
