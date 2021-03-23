@@ -8,6 +8,6 @@ steps:
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'label-studio-al-project-01-NAME', '--image', 'gcr.io/activelearning-308016/github.com/s0tt/label-studio', '--region', 'REGION', '--platform', 'managed']
+  args: ['run', 'deploy', 'label-studio-al-project-01', '--image', 'gcr.io/activelearning-308016/github.com/s0tt/label-studio', '--region', 'REGION', '--platform', 'managed']
 images:
 - gcr.io/activelearning-308016/github.com/s0tt/label-studio
