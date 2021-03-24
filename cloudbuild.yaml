@@ -1,13 +1,13 @@
 steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/activelearning-308016/github.com/s0tt/label-studio', '.']
+  args: ['build', '-t', 'gcr.io/activelearning-308016/al-label-studio-01', '.']
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/activelearning-308016/github.com/s0tt/label-studio']
+  args: ['push', 'gcr.io/activelearning-308016/al-label-studio-01']
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'label-studio-al-project-01', '--image', 'gcr.io/activelearning-308016/github.com/s0tt/label-studio', '--region', 'REGION', '--platform', 'managed']
+  args: ['run', 'deploy', 'label-studio-al-project-01', '--image', 'gcr.io/activelearning-308016/al-label-studio-01', '--region', 'europe-north01', '--platform', 'managed']
 images:
-- gcr.io/activelearning-308016/github.com/s0tt/label-studio
+- gcr.io/activelearning-308016/al-label-studio-01
