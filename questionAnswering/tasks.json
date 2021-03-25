@@ -1,1 +1,42 @@
-{}
+{
+    "0": {
+        "id": 0,
+        "data": {
+            "text": "Ottoman cuisine refers to the cuisine of the capital, Istanbul, and the regional capital cities, where the melting pot of cultures created a common cuisine that most of the population regardless of ethnicity shared. This diverse cuisine was honed in the Imperial Palace's kitchens by chefs brought from certain parts of the Empire to create and experiment with different ingredients. The creations of the Ottoman Palace's kitchens filtered to the population, for instance through Ramadan events, and through the cooking at the Yalıs of the Pashas, and from there on spread to the rest of the population.",
+            "question": "What did the chefs ingredients in the Imperial Palace's kitchens?",
+            "new": true
+        }
+    },
+    "1": {
+        "id": 1,
+        "data": {
+            "text": "Another study examining the health and nutrition literacy status of residents of the lower Mississippi Delta found that 52 percent of participants had a high likelihood of limited literacy skills. While a precise comparison between the NAAL and Delta studies is difficult, primarily because of methodological differences, Zoellner et al. suggest that health literacy rates in the Mississippi Delta region are different from the U.S. general population and that they help establish the scope of the problem of health literacy among adults in the Delta region. For example, only 12 percent of study participants identified the My Pyramid graphic two years after it had been launched by the USDA. The study also found significant relationships between nutrition literacy and income level and nutrition literacy and educational attainment further delineating priorities for the region.",
+            "question": "Who was the main author of the study that suggested that the Mississippi Delta study identified a problem of health literacy?",
+            "new": true
+        }
+    },
+    "2": {
+        "id": 2,
+        "data": {
+            "text": "Amensalism is the type of relationship that exists where one species is inhibited or completely obliterated and one is unaffected. This type of symbiosis is relatively uncommon in rudimentary reference texts, but is omnipresent in the natural world.[citation needed] There are two types of amensalism, competition and antibiosis. Competition is where a larger or stronger organisms deprives a smaller or weaker one from a resource. Antibiosis occurs when one organism is damaged or killed by another through a chemical secretion. An example of competition is a sapling growing under the shadow of a mature tree. The mature tree can begin to rob the sapling of necessary sunlight and, if the mature tree is very large, it can take up rainwater and deplete soil nutrients. Throughout the process the mature tree is unaffected. Indeed, if the sapling dies, the mature tree gains nutrients from the decaying sapling. Note that these nutrients become available because of the sapling's decomposition, rather than from the living sapling, which would be a case of parasitism.[citation needed] An example of antibiosis is Juglans nigra (black walnut), secreting juglone, a substance which destroys many herbaceous plants within its root zone.",
+            "question": "What is the name for the kind of symbiosis in which one organism is seriously harmed and there is no affect on the other?",
+            "new": true
+        }
+    },
+    "3": {
+        "id": 3,
+        "data": {
+            "text": "The Montana Territory was formed on April 26, 1864, when the U.S. passed the Organic Act. Schools started forming in the area before it was officially a territory as families started settling into the area. The first schools were subscription schools that typically held in the teacher's home. The first formal school on record was at Fort Owen in Bitterroot valley in 1862. The students were Indian children and the children of Fort Owen employees. The first school term started in early winter and only lasted until February 28. Classes were taught by Mr. Robinson. Another early subscription school was started by Thomas Dimsdale in Virginia City in 1863. In this school students were charged $1.75 per week. The Montana Territorial Legislative Assembly had its inaugural meeting in 1864. The first legislature authorized counties to levy taxes for schools, which set the foundations for public schooling. Madison County was the first to take advantage of the newly authorized taxes and it formed fhe first public school in Virginia City in 1886. The first school year was scheduled to begin in January 1866, but severe weather postponed its opening until March. The first school year ran through the summer and didn't end until August 17. One of the first teachers at the school was Sarah Raymond. She was a 25-year-old woman who had traveled to Virginia City via wagon train in 1865. To become a certified teacher, Raymond took a test in her home and paid a $6 fee in gold dust to obtain a teaching certificate. With the help of an assistant teacher, Mrs. Farley, Raymond was responsible for teaching 50 to 60 students each day out of the 81 students enrolled at the school. Sarah Raymond was paid at a rate of $125 per month, and Mrs. Farley was paid $75 per month. There were no textbooks used in the school. In their place was an assortment of books brought in by various emigrants. Sarah quit teaching the following year, but would later become the Madison County superintendent of schools.",
+            "question": "When did the first public school in Virginia City formed?",
+            "new": true
+        }
+    },
+    "4": {
+        "id": 4,
+        "data": {
+            "text": "The Obama administration began to reengage in Iraq with a series of airstrikes aimed at ISIS beginning on 10 August 2014. On 9 September 2014 President Obama said that he had the authority he needed to take action to destroy the militant group known as the Islamic State of Iraq and the Levant, citing the 2001 Authorization for Use of Military Force Against Terrorists, and thus did not require additional approval from Congress. The following day on 10 September 2014 President Barack Obama made a televised speech about ISIL, which he stated \"Our objective is clear: We will degrade, and ultimately destroy, ISIL through a comprehensive and sustained counter-terrorism strategy\". Obama has authorized the deployment of additional U.S. Forces into Iraq, as well as authorizing direct military operations against ISIL within Syria. On the night of 21\/22 September the United States, Saudi Arabia, Bahrain, the UAE, Jordan and Qatar started air attacks against ISIS in Syria.[citation needed]",
+            "question": "Which countries worked together to bomb ISIS on Sep 21-22, 2014?",
+            "new": true
+        }
+    }
+}
