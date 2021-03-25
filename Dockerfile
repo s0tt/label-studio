@@ -1,17 +1,17 @@
 # Building the main container
 FROM python:3.6-slim
 
-WORKDIR /usr/src
+WORKDIR /label-studio
 
 RUN apt-get update && apt-get install -y build-essential
 
 # Copy and install requirements.txt first for caching
-COPY requirements.txt ./
+COPY requirements.txt /label-studio
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 ENV PORT="8080"
-ENV PROJECT_NAME="/usr/src/questionAnswering"
+ENV PROJECT_NAME="questionAnswering"
 ENV HOST=0.0.0.0
 ENV PROTOCOL=http://
 # basic auth params
@@ -20,8 +20,8 @@ ENV PASSWORD=""
 
 EXPOSE ${PORT}
 
-COPY . /usr/src
+COPY . /label-studio
 
 RUN python setup.py develop
 
-CMD ["/usr/src/tools/run.sh"]
+CMD ["./tools/run.sh"]
