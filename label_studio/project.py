@@ -77,6 +77,8 @@ class Project(object):
         self.newTasks = []
         self.firstTime = True
         self.lastCompletions = []
+        self.statistic = []
+        self.helpTexts = {}
 
         self.on_boarding = {}
         self.context = context or {}

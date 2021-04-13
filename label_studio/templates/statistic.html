@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div id='myDiv'><!-- Plotly chart will be drawn inside this DIV --></div>
+
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<script type="text/javascript">
+
+
+
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", window.location.href.split("/")[0] + "/api/statistics", true); // true for asynchronous
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            processData(this.responseText);
+    }
+    xmlHttp.send(null);
+
+
+    function processData(jsonData) {
+        var dataObj = JSON.parse(jsonData);
+        var dataLabels = dataObj[0]
+        for (let i = 1; i < dataObj.length; i++) {
+            var elemDiv = document.createElement('div');
+            elemDiv.style.cssText = 'height: 370px; width: 100%;';
+            var elemName = "chartContainer" + i
+            elemDiv.id = elemName
+            document.body.appendChild(elemDiv);
+
+            var data = [dataObj[i]];
+
+            var layout = {
+                title: dataLabels[i - 1][0],
+                xaxis: {
+                    title: 'Label-Iteration',
+                    titlefont: {
+                        family: 'Arial, sans-serif',
+                        size: 18,
+                        color: 'lightgrey'
+                    },
+                    showticklabels: true,
+                    tickangle: 'auto',
+                    tickfont: {
+                        family: 'Old Standard TT, serif',
+                        size: 14,
+                        color: 'black'
+                    },
+                    dtick: 1
+                },
+                yaxis: {
+                    title: dataLabels[i-1][1],
+                    titlefont: {
+                        family: 'Arial, sans-serif',
+                        size: 18,
+                        color: 'lightgrey'
+                    },
+                    showticklabels: true,
+                    tickangle: 45,
+                    tickfont: {
+                        family: 'Old Standard TT, serif',
+                        size: 14,
+                        color: 'black'
+                    }
+                }
+            };
+
+            Plotly.newPlot(elemName, data, layout);
+        
+        }
+
+        var elemDiv = document.createElement('div');
+        elemDiv.style.cssText = 'height: 370px; width: 100%;';
+        var elemName = 'myDiv'
+        elemDiv.id = elemName
+        document.body.appendChild(elemDiv);
+        var data = dataObj;
+
+        var layout = {
+            xaxis: {
+                title: 'Label-Iteration',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 18,
+                    color: 'lightgrey'
+                },
+                showticklabels: true,
+                tickangle: 'auto',
+                tickfont: {
+                    family: 'Old Standard TT, serif',
+                    size: 14,
+                    color: 'black'
+                },
+                dtick: 1
+            },
+            yaxis: {
+                title: 'Value',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 18,
+                    color: 'lightgrey'
+                },
+                showticklabels: true,
+                tickangle: 45,
+                tickfont: {
+                    family: 'Old Standard TT, serif',
+                    size: 14,
+                    color: 'black'
+                }
+            }
+        };
+
+        Plotly.newPlot(elemName, data, layout);
+
+
+    }
+
+
+</script>
+
+{% endblock %}

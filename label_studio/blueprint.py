@@ -383,6 +383,18 @@ def setup_page():
         serialized_project=g.project.serialize()
     )
 
+@blueprint.route('/statistic')
+@requires_auth
+@exception_handler_page
+def statistic_page():
+    """ Statistic page
+    """
+    return flask.render_template(
+        'statistic.html',
+        config=g.project.config,
+        formats=g.project.converter.supported_formats,
+        project=g.project
+    )
 
 @blueprint.route('/export')
 @requires_auth
@@ -999,6 +1011,36 @@ def shutdown_server():
 def shutdown():
     shutdown_server()
     return 'Server shutting down...'
+
+@blueprint.route('/api/statistics', methods=['GET', 'POST'])
+def statistics():
+    if request.method == 'GET':
+        return json.dumps(g.project.statistic, indent=4)
+    if request.method == 'POST':
+        data = request.json if request.json else request.form
+        if len(g.project.statistic)<=0:
+                g.project.statistic.append(data)
+        else:
+            index = 1
+            for d in data:
+                if len(g.project.statistic) <= index:
+                    g.project.statistic.append({})
+                    g.project.statistic[index]["x"] = []
+                    g.project.statistic[index]["y"] = []
+                    g.project.statistic[index]["type"] = "scatter"
+                    g.project.statistic[index]["name"] = g.project.statistic[0][index-1][0]
+                g.project.statistic[index]["y"].append(d)
+                g.project.statistic[index]["x"].append(len(g.project.statistic[index]["x"]))
+                index += 1
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@blueprint.route('/api/helpTexts', methods=['POST'])
+def helpTexts():
+    data = request.json if request.json else request.form
+    g.project.helpTexts = data
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 def main(project_name=None, port=None, configFile='config.xml'):

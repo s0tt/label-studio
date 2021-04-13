@@ -69,6 +69,8 @@ def get_all_columns(project):
                 'labeling': i == 0
             }
         }
+        if key in project.helpTexts:
+            column['help'] = project.helpTexts[key]
         result['columns'].append(column)
         task_data_children.append(column['id'])
         i += 1
