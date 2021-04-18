@@ -281,8 +281,12 @@ def samples_time_series():
 def labeling_page():
     """ Label stream for tasks
     """
+    if g.project.endSurvey:
+        return redirect(url_for('label_studio.survey_end_page'))
+
     if g.project.no_tasks():
         return redirect(url_for('label_studio.welcome_page'))
+
 
     # task data: load task or task with completions if it exists
     task_id = request.args.get('task_id', None)
@@ -328,6 +332,37 @@ def welcome_page():
         config=g.project.config,
         project=g.project,
         on_boarding=g.project.on_boarding
+    )
+
+@blueprint.route('/survey')
+@requires_auth
+@exception_handler_page
+def survey_page():
+    """ On-boarding page
+    """
+    #g.project.update_on_boarding_state()
+    # if g.project.on_boarding['import']:
+    #     return redirect(url_for('data_manager_blueprint.tasks_page'))
+    return flask.render_template(
+        'survey.html',
+        config=g.project.config,
+        project=g.project
+    )
+    
+
+@blueprint.route('/survey-end')
+@requires_auth
+@exception_handler_page
+def survey_end_page():
+    """ On-boarding page
+    """
+    #g.project.update_on_boarding_state()
+    # if g.project.on_boarding['import']:
+    #     return redirect(url_for('data_manager_blueprint.tasks_page'))
+    return flask.render_template(
+        'survey-end.html',
+        config=g.project.config,
+        project=g.project
     )
 
 
@@ -579,6 +614,9 @@ def api_save_config():
 def api_getLabelId():
     # API for task export in connection with the active learner. It waits until the labeling for the specific task has been completed.
 
+    if g.project.endSurvey:
+        return redirect(url_for('label_studio.survey_end_page'))
+
     id = int(request.args.get('id', 0))
     while g.project.waitOnLabeling:
         time.sleep(0.1)
@@ -592,6 +630,7 @@ def api_getLabelId():
 @exception_handler
 def api_getLabels():
     # API for task export in connection with the active learner. It waits until the labeling for the specific task has been completed.
+    #
 
     while g.project.waitOnLabeling:
         time.sleep(0.1)
@@ -618,6 +657,9 @@ def api_getLabels():
 def api_export():
     """ Export labeling results using label-studio-converter to popular formats
     """
+    if g.project.endSurvey:
+        return redirect(url_for('label_studio.survey_end_page'))
+
     export_format = request.args.get('format')
     now = datetime.now()
 
@@ -1039,6 +1081,13 @@ def statistics():
 def helpTexts():
     data = request.json if request.json else request.form
     g.project.helpTexts = data
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@blueprint.route('/api/endSurvey', methods=['POST'])
+def endSurvey():
+    #data = request.json if request.json else request.form
+    g.project.endSurvey = True
 
     return Response(status=status.HTTP_204_NO_CONTENT)
 

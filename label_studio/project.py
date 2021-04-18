@@ -73,6 +73,7 @@ class Project(object):
         self.ml_backends = []
 
         self.waitOnLabeling = False
+        self.endSurvey = False
         self.newTaskAvailable = False
         self.newTasks = []
         self.firstTime = True

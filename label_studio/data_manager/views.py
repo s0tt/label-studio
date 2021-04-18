@@ -14,6 +14,10 @@ import label_studio.data_manager.api  # !: we need to import it here to register
 def tasks_page():
     """ Tasks and completions page
     """
+
+    if g.project.endSurvey:
+        return flask.redirect(flask.url_for('label_studio.survey_end_page'))
+
     return flask.render_template(
         'tasks.html',
         config=g.project.config,
