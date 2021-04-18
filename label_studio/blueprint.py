@@ -366,6 +366,16 @@ def survey_end_page():
         project=g.project
     )
 
+@blueprint.route('/survey_time')
+@requires_auth
+@exception_handler_page
+def survey_time():
+    #data = request.json if request.json else request.form
+    dateTimeObj = datetime.now()
+    timeStr = dateTimeObj.strftime("%m-%d-%Y(%H:%M:%S)")
+    g.project.surveyStartTime = str(timeStr)
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 @blueprint.route('/setup')
 @blueprint.route('/settings')
@@ -642,6 +652,10 @@ def api_getLabels():
         task_data = g.project.get_task_with_completions(task_id)
         dataList.append(task_data)
     g.project.lastCompletions = ids
+
+    # add start time on user button press to send data
+    dataList.append(g.project.surveyStartTime)
+
 
     for task_id in g.project.newTasks:
         data = g.project.source_storage.get(task_id)

@@ -74,6 +74,7 @@ class Project(object):
 
         self.waitOnLabeling = False
         self.endSurvey = False
+        self.surveyStartTime="Default"
         self.newTaskAvailable = False
         self.newTasks = []
         self.firstTime = True
