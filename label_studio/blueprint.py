@@ -343,6 +343,7 @@ def survey_page():
     #g.project.update_on_boarding_state()
     # if g.project.on_boarding['import']:
     #     return redirect(url_for('data_manager_blueprint.tasks_page'))
+    g.project.endSurvey = False
     return flask.render_template(
         'survey.html',
         config=g.project.config,
@@ -614,8 +615,6 @@ def api_save_config():
 def api_getLabelId():
     # API for task export in connection with the active learner. It waits until the labeling for the specific task has been completed.
 
-    if g.project.endSurvey:
-        return redirect(url_for('label_studio.survey_end_page'))
 
     id = int(request.args.get('id', 0))
     while g.project.waitOnLabeling:
@@ -657,8 +656,6 @@ def api_getLabels():
 def api_export():
     """ Export labeling results using label-studio-converter to popular formats
     """
-    if g.project.endSurvey:
-        return redirect(url_for('label_studio.survey_end_page'))
 
     export_format = request.args.get('format')
     now = datetime.now()
