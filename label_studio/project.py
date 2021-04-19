@@ -829,7 +829,9 @@ class Project(object):
         # save label config
         config_xml = 'config.xml'
         config_xml_path = os.path.join(dir, config_xml)
+        print("Label Studio(config_xml_path): {}".format(config_xml_path))
         label_config_file = hasattr(args, 'label_config') and args.label_config or config.get('label_config')
+        print("Label Studio(label_config_file): {}".format(label_config_file))
         if label_config_file:
             copy2(label_config_file, config_xml_path)
             print(label_config_file + ' label config copied to ' + config_xml_path)
