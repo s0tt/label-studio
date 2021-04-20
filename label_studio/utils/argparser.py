@@ -160,7 +160,7 @@ def parse_input_args(project_name=None, port=None, configFile='config.xml'):
         args = parser.parse_args()
     else:
         dir_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
-        args = Namespace(allow_serving_local_files=True, cert_file=None, command='start', config_path=None, debug=None, force=True, host=None, init=True, input_format='json', input_path=None, key_file=None, label_config=dir_path+"\\"+configFile, log_level=None, ml_backends=None, no_browser=False, output_dir=None, password='', port=port, project_desc=None, project_name=project_name, protocol=None, root_dir='.', sampling='sequential', source=None, source_params={}, source_path=None, target=None, target_params={}, target_path=None, template=None, use_gevent=False, username='', verbose=False, version=False)
+        args = Namespace(allow_serving_local_files=True, cert_file=None, command='start', config_path=None, debug=None, force=True, host=None, init=True, input_format='json', input_path=None, key_file=None, label_config=os.path.join(dir_path, configFile), log_level=None, ml_backends=None, no_browser=False, output_dir=None, password='', port=port, project_desc=None, project_name=project_name, protocol=None, root_dir='.', sampling='sequential', source=None, source_params={}, source_path=None, target=None, target_params={}, target_path=None, template=None, use_gevent=False, username='', verbose=False, version=False)
 
     # print version
     if args.version or args.command == 'version':
