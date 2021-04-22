@@ -651,6 +651,9 @@ def api_getLabels():
     for task_id in list(set(ids) - set(g.project.lastCompletions)):
         task_data = g.project.get_task_with_completions(task_id)
         dataList.append(task_data)
+        task = g.project.get_task_with_completions(task_id)
+        task["data"]["new"] = False
+        g.project.target_storage.set(task_id, task)
     g.project.lastCompletions = ids
 
     # add start time on user button press to send data
