@@ -603,9 +603,6 @@ class Project(object):
         else:
             task = deepcopy(task)
 
-        if "data" in task and "new" in task["data"]:
-            task["data"]["new"] = False
-
         # remove possible stored predictions
         task.pop('predictions', None)
         # update old completion
@@ -637,8 +634,6 @@ class Project(object):
         # write task + completions to file
         self.target_storage.set(task_id, task)
         logger.debug('Completion for task ' + str(task_id) + ' saved with id =' + str(completion['id']))
-        if self.waitOnLabeling == task_id:
-            self.waitOnLabeling = -1
         return completion['id']
 
     def delete_task(self, task_id):
