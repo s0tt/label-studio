@@ -1,5 +1,7 @@
 import setuptools
 import label_studio
+import os
+
 
 print(label_studio.package_name, label_studio.__version__)
 
@@ -8,7 +10,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
     long_description = f.read()
 
 # Module dependencies
-with open('requirements.txt') as f:
+with open(os.path.join(os.path.dirname(__file__), 'requirements.txt')) as f:
     requirements = f.read().splitlines()
 
 setuptools.setup(
