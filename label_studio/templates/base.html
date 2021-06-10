@@ -95,6 +95,7 @@
     }
   })
 
+  // Shutdown button added when integrating with the Active Learning Framework to exit Label Studio 
   function shutdown() {
       var xmlHttp = new XMLHttpRequest();
       xmlHttp.open("GET", window.location.href.split("/")[0] + "/api/shutdown", true); // true for asynchronous

@@ -16,7 +16,8 @@
     }
     xmlHttp.send(null);
 
-
+    // Was added for the Active Learning Framework so that it is possible to visually display statistical data on the metrics 
+    // A diagram is displayed for each metric and a combined diagram is created that contains all metrics 
     function processData(jsonData) {
         var dataObj = JSON.parse(jsonData);
         var dataLabels = dataObj[0]

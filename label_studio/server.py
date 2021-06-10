@@ -46,7 +46,9 @@ def check_for_the_latest_version():
     if latest_version and current_version_is_outdated(latest_version):
         print(update_package_message())
 
-
+"""
+project_name, port and configFile were added as parameters so that Label Studio can be started directly from the code of the Active Learning Framewok
+"""
 def main(project_name=None, port=None, configFile='config.xml'):
     # configure logging before importing any label_studio code
     setup_default_logging_config()

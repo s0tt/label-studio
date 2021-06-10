@@ -4,6 +4,31 @@
 
 [Website](https://labelstud.io/) • [Docs](https://labelstud.io/guide/) • [Twitter](https://twitter.com/heartexlabs) • [Join Slack Community <img src="https://app.heartex.ai/docs/images/slack-mini.png" width="18px"/>](https://join.slack.com/t/label-studio/shared_invite/zt-cr8b7ygm-6L45z7biEBw4HXa5A2b5pw)
 
+## Modifications for integration with the Active Learning Framework 
+
+Label Studio has been modified for integration with the Active Learning Framework.
+In particular, additional interfaces for the connection to the Active Learning Framework were integrated.
+In addition, little changes were made to the user interface and the functionality of the buttons.
+Another page has also been added: The statistics page shows diagrams for given metrics.
+
+In the backend part of Label Studio, the following files in particular have been changed.
+- label_studio \ blueprint.py
+- label_studio \ data_import \ api.py
+- label_studio \ data_manager \ api.py
+- label_studio \ data_manager \ functions.py
+- label-studio \ label_studio \ project.py
+- label_studio \ server.py
+- label_studio \ templates \ base.html
+- label_studio \ templates \ statistic.html
+- label_studio \ utils \ argparser.py
+- label_studio \ utils \ misc.py
+The positions are marked with comments.
+
+Small changes have also been made to the part of the data manager (@ heartexlabs / datamanager) and thus also to "label_studio \ static \ js \ build \ index.js". These mainly concerned:
+- src \ components \ Label \ LabelToolbar.js
+- src \ components \ Tabs \ tabs-panel.js
+- config-overrides.js
+- package-lock.json 
 
 ## What is Label Studio?
 

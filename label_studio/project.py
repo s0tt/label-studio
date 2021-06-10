@@ -72,12 +72,22 @@ class Project(object):
         self.path = os.path.join(root_dir, self.name)
         self.ml_backends = []
 
+        """
+        The parameters in the following block were not part of the original Label Studio and was added for integration with the Active Learner.
+        """
+        # Indicates the status of whether data has already been imported but has not yet been labeled, more precisely whether the export button has not yet been pressed on the GUI.
         self.waitOnLabeling = False
+        # Indicates whether new tasks have been imported which have not yet been labeled.
         self.newTaskAvailable = False
+        # Indicates the task IDs added during the last import.
         self.newTasks = []
+        # Should prevent multiple instances from running at the same time.
         self.firstTime = True
+        # Outputs the IDs of the tasks that have been labeled in the previous rounds.
         self.lastCompletions = []
+        # Stores data points of the metrics for the statistics page.
         self.statistic = []
+        # Saves help texts for the metrics, which are assigned to the metric via a key. 
         self.helpTexts = {}
 
         self.on_boarding = {}

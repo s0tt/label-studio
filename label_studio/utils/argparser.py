@@ -5,6 +5,9 @@ from label_studio.utils.io import find_dir
 from label_studio.utils.misc import iter_config_templates
 
 
+"""
+project_name, port and configFile were added as parameters so that Label Studio can be started directly from the code of the Active Learning Framewok
+"""
 def parse_input_args(project_name=None, port=None, configFile='config.xml'):
     """ Combine args with json config
 

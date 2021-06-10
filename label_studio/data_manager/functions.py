@@ -69,6 +69,8 @@ def get_all_columns(project):
                 'labeling': i == 0
             }
         }
+
+        # Use of the help texts that have been added for the Active Learning Framework 
         if key in project.helpTexts:
             column['help'] = project.helpTexts[key]
         result['columns'].append(column)

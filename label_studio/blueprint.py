@@ -577,7 +577,12 @@ def api_save_config():
 @requires_auth
 @exception_handler
 def api_getLabelId():
-    # API for task export in connection with the active learner. It waits until the labeling for the specific task has been completed.
+    """
+    Was not part of the original Label Studio and was added for integration with the Active Learner.
+    API for task export in connection with the active learner.
+    It waits until the labeling for the specific task (specified by the ID) has been completed.
+    """
+    # API for task export in connection with the active learner. It waits until the labeling for the specific task (specified by the ID) has been completed.
 
     id = int(request.args.get('id', 0))
     while g.project.waitOnLabeling:
@@ -591,7 +596,11 @@ def api_getLabelId():
 @requires_auth
 @exception_handler
 def api_getLabels():
-    # API for task export in connection with the active learner. It waits until the labeling for the specific task has been completed.
+    """
+    Was not part of the original Label Studio and was added for integration with the Active Learner.
+    API for task export in connection with the active learner.
+    It waits until the labeling for the tasks has been completed.
+    """
 
     while g.project.waitOnLabeling:
         time.sleep(0.1)
@@ -1005,6 +1014,10 @@ def json_filter(s):
     return json.dumps(s)
 
 def shutdown_server():
+    """
+    Was not part of the original Label Studio and was added for integration with the Active Learner.
+    Shuts down the Label Studio server.
+    """
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
         raise RuntimeError('Not running with the Werkzeug Server')
@@ -1012,13 +1025,23 @@ def shutdown_server():
     
 @blueprint.route('/api/shutdown', methods=['GET'])
 def shutdown():
+    """
+    Was not part of the original Label Studio and was added for integration with the Active Learner.
+    API interface for shutting down the Label Studio server.
+    """
     shutdown_server()
     return 'Server shutting down...'
 
 @blueprint.route('/api/statistics', methods=['GET', 'POST'])
 def statistics():
+    """
+    Was not part of the original Label Studio and was added for integration with the Active Learner.
+    Stores and manages metric data for the statistics page via an API interface.
+    """
+    # access to the metric data 
     if request.method == 'GET':
         return json.dumps(g.project.statistic, indent=4)
+    # add metric data 
     if request.method == 'POST':
         data = request.json if request.json else request.form
         if len(g.project.statistic)<=0:
@@ -1040,12 +1063,18 @@ def statistics():
 
 @blueprint.route('/api/helpTexts', methods=['POST'])
 def helpTexts():
+    """
+    Was not part of the original Label Studio and was added for integration with the Active Learner.
+    API interface for setting help texts that should explain the meaning of the metrics.
+    """
     data = request.json if request.json else request.form
     g.project.helpTexts = data
 
     return Response(status=status.HTTP_204_NO_CONTENT)
 
-
+"""
+project_name, port and configFile were added as parameters so that Label Studio can be started directly from the code of the Active Learning Framewok
+"""
 def main(project_name=None, port=None, configFile='config.xml'):
     # this will avoid looped imports and will register deprecated endpoints in the blueprint
     import label_studio.deprecated

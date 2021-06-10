@@ -183,7 +183,11 @@ def api_project_tab_annotations(tab_id):
     annotations = prepare_annotations(tasks['tasks'], annotation_params)
     return make_response(jsonify(annotations), 200)
 
-
+"""
+The behavior has been changed for the integration with the Active Learning Framework
+so that Label Studio waits for the newly imported data after the data has been exported
+and displays it to the user immediately after it has arrived
+"""
 @blueprint.route('/api/project/tabs/<tab_id>/actions', methods=['POST'])
 @requires_auth
 @exception_handler

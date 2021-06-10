@@ -322,6 +322,8 @@ def serialize_class(class_instance, keys=None):
 
 
 class DirectionSwitch:
+
+    # For the integration with the Active Learning Framework, the sorting has been extended so that it also works with numbers.
     def __init__(self, obj, inverted):
         try:
             self.obj = float(obj)
@@ -371,7 +373,7 @@ def check_port_in_use(host, port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         return s.connect_ex((host, port)) == 0
 
-
+# For the integration with the Active Learning Framework, the start address has been changed so that the user is redirected directly to the label page 
 def start_browser(ls_url, no_browser):
     import threading
     import webbrowser

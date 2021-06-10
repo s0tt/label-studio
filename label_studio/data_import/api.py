@@ -180,7 +180,10 @@ def _create_import_state(request, g):
 @requires_auth
 @exception_handler
 def api_waitForTask():
-    # Releases the export of the labeled data to the Active Learner and waits for new imported data to enable the page to be updated.
+    """
+    Was not part of the original Label Studio and was added for integration with the Active Learner.
+    Releases the export of the labeled data to the Active Learner and waits for new imported data to enable the page to be updated.
+    """
     if request.headers.get('start', "False") == "True":
         if not g.project.firstTime:
             return HttpResponse(status=status.HTTP_201_CREATED)
@@ -197,7 +200,10 @@ def api_waitForTask():
 @requires_auth
 @exception_handler
 def api_sendTask():
-    # API for task import in connection with the active learner
+    """
+    Was not part of the original Label Studio and was added for integration with the Active Learner.
+    API for task import in connection with the active learner.
+    """
 
     start = time.time()
     data = request.json if request.json else request.form
@@ -209,7 +215,6 @@ def api_sendTask():
     try:
         import_state = _create_import_state(request, g)
     except ValidationError as e:
-        # TODO: import specific exception handler
         return make_response(jsonify(e.msg_to_list()), 422)
 
     response = import_state.serialize()
